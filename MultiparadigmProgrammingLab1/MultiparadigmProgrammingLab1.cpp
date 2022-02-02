@@ -8,9 +8,12 @@ int main()
     ifstream inFile("text.txt");
     string word;
     loopstart:
-    if(inFile>>word)
+    if(inFile >> word)
     {
-        cout<<word<<endl;
-        goto loopstart;
+        if((word != "the") && (word != "for"))
+        {
+            cout << word << endl;
+            goto loopstart;
+        }
     }
 }
