@@ -15,8 +15,19 @@ int main()
     {
         if ((word != "the") && (word != "for") && (word != "in"))
         {
+            int i = 0;
+            capitalLettersNormalization:
+            if(i<word.length())
+            {
+                if(word[i] >= 65 && word[i] <= 90)
+                {
+                    word[i]+=32;
+                }
+                i++;
+                goto capitalLettersNormalization;
+            }
+
             words[currentWordIndex] = word;
-            //cout<<word;
             currentWordIndex++;
         }
         goto loopstart;
