@@ -159,7 +159,7 @@ outerSortingLoop:
 	out:
 		if (i < displayWordsNumber)
 		{
-			cout << /*std::setw(8) << std::left <<*/ words[i] << "- " << wordOccurences[i] << "\n";
+			cout << std::setw(8) << std::left << words[i] << " - " << wordOccurences[i] << "\n";
 			i++;
 			goto out;
 		}
