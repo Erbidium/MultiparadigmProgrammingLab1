@@ -51,9 +51,26 @@ loopstart:
 		}
 		goto loopstart;
 	}
-	inFile.close();
 
-	int i = 0;
+	int i = 0, j = 0;
+	for (; i < currentWordIndex; i++)
+	{
+		j = 0;
+		for (; j < currentWordIndex - 1; j++)
+		{
+			if (wordOccurences[j] < wordOccurences[j + 1])
+			{
+				string temp = words[j];
+				words[j] = words[j + 1];
+				words[j + 1] = temp;
+				int tempOccurences = wordOccurences[j];
+				wordOccurences[j] = wordOccurences[j + 1];
+				wordOccurences[j + 1] = tempOccurences;
+			}
+		}
+	}
+
+	i = 0;
 out:
 	if (i < currentWordIndex)
 	{
