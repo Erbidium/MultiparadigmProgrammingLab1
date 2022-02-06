@@ -145,7 +145,22 @@ outerSortingLoop:
 	innerSortingLoop:
 		if (j < currentWordIndex - i - 1)
 		{
-			if (wordOccurrences[j] < wordOccurrences[j + 1])
+			bool makeWordsSwap = false;
+
+			int f = 0;
+		wordsComparison:
+			if (words[j][f] > words[j + 1][f])
+			{
+				makeWordsSwap = true;
+				goto endWordsComparison;
+			}
+			f++;
+			if (words[j][f] != '\0' && words[j + 1][f] != '\0')
+			{
+				goto wordsComparison;
+			}
+		endWordsComparison:
+			if (makeWordsSwap)
 			{
 				string temp = words[j];
 				words[j] = words[j + 1];
@@ -171,7 +186,7 @@ outerSortingLoop:
 	out:
 		if (i < currentWordIndex)
 		{
-			if(wordOccurrences[i]<=100)
+			if (wordOccurrences[i] <= 100)
 			{
 				cout << std::setw(8) << std::left << words[i] << " - " << wordOccurrences[i] << "\n";
 			}
