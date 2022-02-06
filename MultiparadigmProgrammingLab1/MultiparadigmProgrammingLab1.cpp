@@ -6,14 +6,49 @@ using namespace std;
 int main()
 {
 	int numberOfFrequentWordsToDisplay = 25;
-	ifstream inFile("text.txt");
+
 	string words[10000];
 	int wordOccurences[10000];
+
+	char punctuationMarksAndSymbols[] = { ',', '"', '\'', '.', '!', '?', ':', ';', '(', ')', '{', '}' };
+	int numberOfSymbolsToCheck = 12;
+
 	int currentWordIndex = 0;
-	string word;
+	string symbolsSequence;
+
+	ifstream inFile("text.txt");
+
 loopstart:
-	if (inFile >> word)
+	if (inFile >> symbolsSequence)
 	{
+		string word;
+		int i = 0;
+	symbolsRemoval:
+		if (i < symbolsSequence.length())
+		{
+			bool validSymbol = true;
+			int k = 0;
+		checkSymbol:
+			if (k < numberOfSymbolsToCheck)
+			{
+				if (symbolsSequence[i] == punctuationMarksAndSymbols[k])
+				{
+					validSymbol = false;
+					goto endCheckSymbol;
+				}
+				k++;
+				goto checkSymbol;
+			}
+		endCheckSymbol:
+			if (validSymbol)
+			{
+				word += symbolsSequence[i];
+			}
+			i++;
+			goto symbolsRemoval;
+		}
+
+		//process stop words
 		if ((word != "the") && (word != "for") && (word != "in"))
 		{
 			int i = 0;
@@ -78,7 +113,7 @@ outerSortingLoop:
 
 	i = 0;
 	int displayWordsNumber = 0;
-	if(numberOfFrequentWordsToDisplay < currentWordIndex)
+	if (numberOfFrequentWordsToDisplay < currentWordIndex)
 	{
 		displayWordsNumber = numberOfFrequentWordsToDisplay;
 	}
@@ -87,6 +122,7 @@ outerSortingLoop:
 		displayWordsNumber = currentWordIndex;
 	}
 out:
+	// show message if no words
 	if (i < displayWordsNumber)
 	{
 		cout << words[i] << " - " << wordOccurences[i] << "\n";
