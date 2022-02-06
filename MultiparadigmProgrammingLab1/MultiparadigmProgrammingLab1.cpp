@@ -5,7 +5,12 @@ using namespace std;
 
 int main()
 {
-	int numberOfFrequentWordsToDisplay = 25;
+	cout << "Enter number of frequent words to display(N): ";
+	int numberOfFrequentWordsToDisplay;
+	cin >> numberOfFrequentWordsToDisplay;
+	cout << "Enter name of file with text: ";
+	string fileName;
+	cin >> fileName;
 
 	string words[10000];
 	int wordOccurences[10000];
@@ -18,7 +23,7 @@ int main()
 
 	int i = 0, j = 0;
 
-	ifstream inFile("text.txt");
+	ifstream inFile(fileName);
 
 loopstart:
 	if (inFile >> symbolsSequence)
