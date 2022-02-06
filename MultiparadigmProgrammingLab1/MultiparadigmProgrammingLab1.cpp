@@ -8,6 +8,7 @@ int main()
 	int numberOfFrequentWordsToDisplay = 25;
 	ifstream inFile("text.txt");
 	string words[10000];
+	int wordOccurences[10000];
 	int currentWordIndex = 0;
 	string word;
 loopstart:
@@ -31,17 +32,21 @@ loopstart:
 		checkIfWordWasPreviously:
 			if (i < currentWordIndex)
 			{
-				if(words[i] == word)
+				if (words[i] == word)
 				{
-					/// add more occurence to the word
 					wordWasPreviouslyAdded = true;
+					wordOccurences[i]++;
+					goto endCheckIfWordWasPreviously;
 				}
 				i++;
 				goto checkIfWordWasPreviously;
 			}
-			// if not, add word to the end
-			words[currentWordIndex] = word;
-			currentWordIndex++;
+		endCheckIfWordWasPreviously:
+			if (wordWasPreviouslyAdded == false)
+			{
+				words[currentWordIndex] = word;
+				currentWordIndex++;
+			}
 		}
 		goto loopstart;
 	}
