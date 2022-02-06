@@ -53,10 +53,10 @@ loopstart:
 	}
 
 	int i = 0, j = 0;
-	for (; i < currentWordIndex; i++)
+	for (; i < currentWordIndex - 1; i++)
 	{
 		j = 0;
-		for (; j < currentWordIndex - 1; j++)
+		for (; j < currentWordIndex - i - 1; j++)
 		{
 			if (wordOccurences[j] < wordOccurences[j + 1])
 			{
