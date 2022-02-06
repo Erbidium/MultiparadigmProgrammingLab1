@@ -53,10 +53,12 @@ loopstart:
 	}
 
 	int i = 0, j = 0;
-	for (; i < currentWordIndex - 1; i++)
+outerSortingLoop:
+	if (i < currentWordIndex - 1)
 	{
 		j = 0;
-		for (; j < currentWordIndex - i - 1; j++)
+	innerSortingLoop:
+		if (j < currentWordIndex - i - 1)
 		{
 			if (wordOccurences[j] < wordOccurences[j + 1])
 			{
@@ -67,7 +69,11 @@ loopstart:
 				wordOccurences[j] = wordOccurences[j + 1];
 				wordOccurences[j + 1] = tempOccurences;
 			}
+			j++;
+			goto innerSortingLoop;
 		}
+		i++;
+		goto outerSortingLoop;
 	}
 
 	i = 0;
