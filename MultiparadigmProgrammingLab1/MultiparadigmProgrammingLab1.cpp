@@ -19,6 +19,9 @@ int main()
 	char punctuationMarksAndSymbols[] = { ',', '"', '\'', '.', '!', '?', ':', ';', '(', ')', '{', '}' };
 	int numberOfSymbolsToCheck = 12;
 
+	string stopWords[] = { "the", "for", "in", "at", "on", "by", "of", "with", "a", "but", "to", "am", "is", "are" };
+	int stopWordsNuber = 14;
+
 	int currentWordIndex = 0;
 	string symbolsSequence;
 
@@ -57,23 +60,36 @@ loopstart:
 			goto symbolsRemoval;
 		}
 
-		//process stop words
-		if ((word != "the") && (word != "for") && (word != "in"))
+		word += '\0';
+
+		i = 0;
+	capitalLettersNormalization:
+		if (word[i] != '\0')
 		{
-
-			word += '\0';
-
-			i = 0;
-		capitalLettersNormalization:
-			if (word[i] != '\0')
+			if (word[i] >= 65 && word[i] <= 90)
 			{
-				if (word[i] >= 65 && word[i] <= 90)
-				{
-					word[i] += 32;
-				}
-				i++;
-				goto capitalLettersNormalization;
+				word[i] += 32;
 			}
+			i++;
+			goto capitalLettersNormalization;
+		}
+
+		bool isStopWord = false;
+		i = 0;
+	checkStopWord:
+		if (i < stopWordsNuber)
+		{
+			if (word == stopWords[i] + '\0')
+			{
+				isStopWord = true;
+				goto endCheckStopWord;
+			}
+			i++;
+			goto checkStopWord;
+		}
+	endCheckStopWord:
+		if (!isStopWord)
+		{
 			i = 0;
 			bool wordWasPreviouslyAdded = false;
 		checkIfWordWasPreviously:
@@ -143,7 +159,7 @@ outerSortingLoop:
 	out:
 		if (i < displayWordsNumber)
 		{
-			cout << std::setw(8) << std::left << words[i] << " - " << wordOccurences[i] << "\n";
+			cout << /*std::setw(8) << std::left <<*/ words[i] << "- " << wordOccurences[i] << "\n";
 			i++;
 			goto out;
 		}
