@@ -171,7 +171,10 @@ outerSortingLoop:
 	out:
 		if (i < currentWordIndex)
 		{
-			cout << std::setw(8) << std::left << words[i] << " - " << wordOccurrences[i] << "\n";
+			if(wordOccurrences[i]<=100)
+			{
+				cout << std::setw(8) << std::left << words[i] << " - " << wordOccurrences[i] << "\n";
+			}
 			i++;
 			goto out;
 		}
