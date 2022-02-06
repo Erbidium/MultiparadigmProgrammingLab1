@@ -16,15 +16,18 @@ int main()
 	int currentWordIndex = 0;
 	string symbolsSequence;
 
+	int i = 0, j = 0;
+
 	ifstream inFile("text.txt");
 
 loopstart:
 	if (inFile >> symbolsSequence)
 	{
+		symbolsSequence += '\0';
 		string word;
-		int i = 0;
+		i = 0;
 	symbolsRemoval:
-		if (i < symbolsSequence.length())
+		if (symbolsSequence[i] != '\0')
 		{
 			bool validSymbol = true;
 			int k = 0;
@@ -51,9 +54,12 @@ loopstart:
 		//process stop words
 		if ((word != "the") && (word != "for") && (word != "in"))
 		{
-			int i = 0;
+
+			word += '\0';
+
+			i = 0;
 		capitalLettersNormalization:
-			if (i < word.length())
+			if (word[i] != '\0')
 			{
 				if (word[i] >= 65 && word[i] <= 90)
 				{
@@ -87,7 +93,7 @@ loopstart:
 		goto loopstart;
 	}
 
-	int i = 0, j = 0;
+	i = j = 0;
 outerSortingLoop:
 	if (i < currentWordIndex - 1)
 	{
