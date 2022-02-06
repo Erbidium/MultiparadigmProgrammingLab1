@@ -13,8 +13,9 @@ int main()
 	string fileName;
 	cin >> fileName;
 
-	string words[10000];
-	int wordOccurences[10000];
+	int wordsCapacity = 10;
+	string* words = new string[wordsCapacity];
+	int* wordOccurrences = new int[wordsCapacity];
 
 	char punctuationMarksAndSymbols[] = { ',', '"', '\'', '.', '!', '?', ':', ';', '(', ')', '{', '}' };
 	int numberOfSymbolsToCheck = 12;
@@ -32,6 +33,30 @@ int main()
 loopstart:
 	if (inFile >> symbolsSequence)
 	{
+		if (wordsCapacity == currentWordIndex)
+		{
+			wordsCapacity *= 2;
+			string* newWords = new string[wordsCapacity];
+			int* newWordOccurrences = new int[wordsCapacity];
+
+			i = 0;
+		copyWord:
+			if (i < wordsCapacity / 2)
+			{
+				newWords[i] = words[i];
+				newWordOccurrences[i] = wordOccurrences[i];
+				i++;
+				goto copyWord;
+			}
+
+			delete[] words;
+			words = newWords;
+
+			delete[] wordOccurrences;
+			wordOccurrences = newWordOccurrences;
+		}
+
+
 		symbolsSequence += '\0';
 		string word;
 		i = 0;
@@ -98,7 +123,7 @@ loopstart:
 				if (words[i] == word)
 				{
 					wordWasPreviouslyAdded = true;
-					wordOccurences[i]++;
+					wordOccurrences[i]++;
 					goto endCheckIfWordWasPreviously;
 				}
 				i++;
@@ -108,7 +133,7 @@ loopstart:
 			if (!wordWasPreviouslyAdded)
 			{
 				words[currentWordIndex] = word;
-				wordOccurences[currentWordIndex] = 1;
+				wordOccurrences[currentWordIndex] = 1;
 				currentWordIndex++;
 			}
 		}
@@ -123,14 +148,14 @@ outerSortingLoop:
 	innerSortingLoop:
 		if (j < currentWordIndex - i - 1)
 		{
-			if (wordOccurences[j] < wordOccurences[j + 1])
+			if (wordOccurrences[j] < wordOccurrences[j + 1])
 			{
 				string temp = words[j];
 				words[j] = words[j + 1];
 				words[j + 1] = temp;
-				int tempOccurences = wordOccurences[j];
-				wordOccurences[j] = wordOccurences[j + 1];
-				wordOccurences[j + 1] = tempOccurences;
+				int tempOccurences = wordOccurrences[j];
+				wordOccurrences[j] = wordOccurrences[j + 1];
+				wordOccurrences[j + 1] = tempOccurences;
 			}
 			j++;
 			goto innerSortingLoop;
@@ -159,10 +184,12 @@ outerSortingLoop:
 	out:
 		if (i < displayWordsNumber)
 		{
-			cout << std::setw(8) << std::left << words[i] << " - " << wordOccurences[i] << "\n";
+			cout << std::setw(8) << std::left << words[i] << " - " << wordOccurrences[i] << "\n";
 			i++;
 			goto out;
 		}
 	}
 
+	delete[] words;
+	delete[] wordOccurrences;
 }
