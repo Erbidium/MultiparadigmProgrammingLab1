@@ -80,7 +80,7 @@ outerSortingLoop:
 out:
 	if (i < currentWordIndex)
 	{
-		cout << words[i] << " " << wordOccurences[i] << "\n";
+		cout << words[i] << " - " << wordOccurences[i] << "\n";
 		i++;
 		goto out;
 	}
