@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -122,7 +123,6 @@ outerSortingLoop:
 		goto outerSortingLoop;
 	}
 
-	i = 0;
 	int displayWordsNumber = 0;
 	if (numberOfFrequentWordsToDisplay < currentWordIndex)
 	{
@@ -132,12 +132,21 @@ outerSortingLoop:
 	{
 		displayWordsNumber = currentWordIndex;
 	}
-out:
-	// show message if no words
-	if (i < displayWordsNumber)
+
+	if (displayWordsNumber == 0)
 	{
-		cout << words[i] << " - " << wordOccurences[i] << "\n";
-		i++;
-		goto out;
+		cout << "No words!";
 	}
+	else
+	{
+		i = 0;
+	out:
+		if (i < displayWordsNumber)
+		{
+			cout << std::setw(8) << std::left << words[i] << " - " << wordOccurences[i] << "\n";
+			i++;
+			goto out;
+		}
+	}
+
 }
