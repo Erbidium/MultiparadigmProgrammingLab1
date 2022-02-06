@@ -77,8 +77,17 @@ outerSortingLoop:
 	}
 
 	i = 0;
+	int displayWordsNumber = 0;
+	if(numberOfFrequentWordsToDisplay < currentWordIndex)
+	{
+		displayWordsNumber = numberOfFrequentWordsToDisplay;
+	}
+	else
+	{
+		displayWordsNumber = currentWordIndex;
+	}
 out:
-	if (i < currentWordIndex)
+	if (i < displayWordsNumber)
 	{
 		cout << words[i] << " - " << wordOccurences[i] << "\n";
 		i++;
