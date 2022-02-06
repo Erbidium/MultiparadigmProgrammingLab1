@@ -42,9 +42,10 @@ loopstart:
 				goto checkIfWordWasPreviously;
 			}
 		endCheckIfWordWasPreviously:
-			if (wordWasPreviouslyAdded == false)
+			if (!wordWasPreviouslyAdded)
 			{
 				words[currentWordIndex] = word;
+				wordOccurences[currentWordIndex] = 1;
 				currentWordIndex++;
 			}
 		}
@@ -56,7 +57,7 @@ loopstart:
 out:
 	if (i < currentWordIndex)
 	{
-		cout << words[i] << "\n";
+		cout << words[i] << " " << wordOccurences[i] << "\n";
 		i++;
 		goto out;
 	}
