@@ -6,9 +6,6 @@ using namespace std;
 
 int main()
 {
-	cout << "Enter number of frequent words to display(N): ";
-	int numberOfFrequentWordsToDisplay;
-	cin >> numberOfFrequentWordsToDisplay;
 	cout << "Enter name of file with text: ";
 	string fileName;
 	cin >> fileName;
@@ -164,17 +161,7 @@ outerSortingLoop:
 		goto outerSortingLoop;
 	}
 
-	int displayWordsNumber = 0;
-	if (numberOfFrequentWordsToDisplay < currentWordIndex)
-	{
-		displayWordsNumber = numberOfFrequentWordsToDisplay;
-	}
-	else
-	{
-		displayWordsNumber = currentWordIndex;
-	}
-
-	if (displayWordsNumber == 0)
+	if (currentWordIndex == 0)
 	{
 		cout << "No words!";
 	}
@@ -182,7 +169,7 @@ outerSortingLoop:
 	{
 		i = 0;
 	out:
-		if (i < displayWordsNumber)
+		if (i < currentWordIndex)
 		{
 			cout << std::setw(8) << std::left << words[i] << " - " << wordOccurrences[i] << "\n";
 			i++;
