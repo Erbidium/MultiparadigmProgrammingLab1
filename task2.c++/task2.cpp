@@ -149,14 +149,18 @@ outerSortingLoop:
 
 			int f = 0;
 		wordsComparison:
+			if (words[j][f] < words[j + 1][f])
+			{
+				goto endWordsComparison;
+			}
 			if (words[j][f] > words[j + 1][f])
 			{
 				makeWordsSwap = true;
 				goto endWordsComparison;
 			}
-			f++;
 			if (words[j][f] != '\0' && words[j + 1][f] != '\0')
 			{
+				f++;
 				goto wordsComparison;
 			}
 		endWordsComparison:
