@@ -20,8 +20,8 @@ int main()
 	char punctuationMarksAndSymbols[] = { ',', '"', '\'', '.', '!', '?', ':', ';', '(', ')', '{', '}' };
 	int numberOfSymbolsToCheck = 12;
 
-	string stopWords[] = { "the", "for", "in", "at", "on", "by", "of", "with", "a", "but", "to", "am", "is", "are" };
-	int stopWordsNuber = 14;
+	string stopWords[] = { "the", "for", "in", "at", "on", "by", "of", "with", "a", "but", "to", "am", "is", "are", "and"};
+	int stopWordsNuber = 15;
 
 	int currentWordIndex = 0;
 	string symbolsSequence;
@@ -113,7 +113,28 @@ loopstart:
 			goto checkStopWord;
 		}
 	endCheckStopWord:
-		if (!isStopWord)
+
+		bool isValidWord = true;
+		i = 0;
+	checkValidWord:
+		if (word[i] != '\0')
+		{
+			if (!((word[i] >= 97 && word[i] <= 122) || (word[i] == '-') || (word[i] == '\'')))
+			{
+				isValidWord = false;
+				goto endCheckValidWord;
+			}
+			i++;
+			goto checkValidWord;
+		}
+	endCheckValidWord:
+
+		if (word == "" || word == "'" || word == "-")
+		{
+			isValidWord = false;
+		}
+
+		if (!isStopWord && isValidWord)
 		{
 			i = 0;
 			bool wordWasPreviouslyAdded = false;

@@ -33,8 +33,8 @@ memoryAlloc:
 	char punctuationMarksAndSymbols[] = { ',', '"', '\'', '.', '!', '?', ':', ';', '(', ')', '{', '}' };
 	int numberOfSymbolsToCheck = 12;
 
-	string stopWords[] = { "the", "for", "in", "at", "on", "by", "of", "with", "a", "but", "to", "am", "is", "are" };
-	int stopWordsNumber = 14;
+	string stopWords[] = { "the", "for", "in", "at", "on", "by", "of", "with", "a", "but", "to", "am", "is", "are", "and" };
+	int stopWordsNumber = 15;
 
 	int currentWordIndex = 0;
 	string symbolsSequence;
@@ -151,9 +151,9 @@ loopstart:
 		}
 	endCheckValidWord:
 
-		if(word == "" || word =="'" || word =="-")
+		if (word == "" || word == "'" || word == "-")
 		{
-			isValidWord = false;	
+			isValidWord = false;
 		}
 
 		if (!isStopWord && isValidWord)
