@@ -95,7 +95,7 @@ loopstart:
 				goto checkSymbol;
 			}
 		endCheckSymbol:
-			if (validSymbol)
+			if (validSymbol && ((symbolsSequence[i]>=65)&&(symbolsSequence[i]<=90))||((symbolsSequence[i]>=97)&&(symbolsSequence[i]<=122)))
 			{
 				word += symbolsSequence[i];
 			}
