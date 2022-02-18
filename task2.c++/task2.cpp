@@ -170,7 +170,7 @@ loopstart:
 					{
 						if (symbolsCounter >= symbolsPerPage)
 						{
-							currentPage++;
+							currentPage += symbolsCounter / symbolsPerPage;
 							symbolsCounter = 0;
 						}
 						wordsPages[i][wordOccurrences[i]] = currentPage;
@@ -189,7 +189,7 @@ loopstart:
 
 				if (symbolsCounter >= symbolsPerPage)
 				{
-					currentPage++;
+					currentPage += symbolsCounter / symbolsPerPage;
 					symbolsCounter = 0;
 				}
 				wordsPages[currentWordIndex][0] = currentPage;
