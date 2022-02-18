@@ -101,7 +101,7 @@ loopstart:
 				goto checkSymbol;
 			}
 		endCheckSymbol:
-			if (validSymbol && ((symbolsSequence[i] >= 65) && (symbolsSequence[i] <= 90)) || ((symbolsSequence[i] >= 97) && (symbolsSequence[i] <= 122)))
+			if (validSymbol)
 			{
 				word += symbolsSequence[i];
 			}
@@ -135,7 +135,28 @@ loopstart:
 			goto checkStopWord;
 		}
 	endCheckStopWord:
-		if (!isStopWord)
+
+		bool isValidWord = true;
+		i = 0;
+	checkValidWord:
+		if (word[i] != '\0')
+		{
+			if (!((word[i] >= 97 && word[i] <= 122) || (word[i] == '-') || (word[i] == '\'')))
+			{
+				isValidWord = false;
+				goto endCheckValidWord;
+			}
+			i++;
+			goto checkValidWord;
+		}
+	endCheckValidWord:
+
+		if(word == "" || word =="'" || word =="-")
+		{
+			isValidWord = false;	
+		}
+
+		if (!isStopWord && isValidWord)
 		{
 			i = 0;
 			bool wordWasPreviouslyAdded = false;
