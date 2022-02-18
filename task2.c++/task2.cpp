@@ -11,6 +11,11 @@ int main()
 	cin >> fileName;
 
 	int wordsCapacity = 10;
+
+	int wordsPerPage = 255;
+	int wordsCounter = 0;
+	int currentPage = 1;
+
 	string* words = new string[wordsCapacity];
 	int* wordOccurrences = new int[wordsCapacity];
 	int** wordsPages = new int* [wordsCapacity];
@@ -95,7 +100,7 @@ loopstart:
 				goto checkSymbol;
 			}
 		endCheckSymbol:
-			if (validSymbol && ((symbolsSequence[i]>=65)&&(symbolsSequence[i]<=90))||((symbolsSequence[i]>=97)&&(symbolsSequence[i]<=122)))
+			if (validSymbol && ((symbolsSequence[i] >= 65) && (symbolsSequence[i] <= 90)) || ((symbolsSequence[i] >= 97) && (symbolsSequence[i] <= 122)))
 			{
 				word += symbolsSequence[i];
 			}
@@ -131,6 +136,8 @@ loopstart:
 	endCheckStopWord:
 		if (!isStopWord)
 		{
+			wordsCounter++;
+
 			i = 0;
 			bool wordWasPreviouslyAdded = false;
 		checkIfWordWasPreviously:
@@ -141,7 +148,12 @@ loopstart:
 					wordWasPreviouslyAdded = true;
 					if (wordOccurrences[i] < 100)
 					{
-						wordsPages[i][wordOccurrences[i]] = 5;
+						if (wordsCounter >= wordsPerPage)
+						{
+							currentPage++;
+							wordsCounter = 0;
+						}
+						wordsPages[i][wordOccurrences[i]] = currentPage;
 					}
 					wordOccurrences[i]++;
 					goto endCheckIfWordWasPreviously;
@@ -154,7 +166,14 @@ loopstart:
 			{
 				words[currentWordIndex] = word;
 				wordOccurrences[currentWordIndex] = 1;
-				wordsPages[currentWordIndex][0] = 5;
+
+				if (wordsCounter >= wordsPerPage)
+				{
+					currentPage++;
+					wordsCounter = 0;
+				}
+				wordsPages[currentWordIndex][0] = currentPage;
+
 				currentWordIndex++;
 			}
 		}
