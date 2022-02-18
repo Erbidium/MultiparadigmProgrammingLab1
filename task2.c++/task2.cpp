@@ -18,7 +18,7 @@ int main()
 	int numberOfSymbolsToCheck = 12;
 
 	string stopWords[] = { "the", "for", "in", "at", "on", "by", "of", "with", "a", "but", "to", "am", "is", "are" };
-	int stopWordsNuber = 14;
+	int stopWordsNumber = 14;
 
 	int currentWordIndex = 0;
 	string symbolsSequence;
@@ -53,8 +53,6 @@ loopstart:
 			wordOccurrences = newWordOccurrences;
 		}
 
-
-		symbolsSequence += '\0';
 		string word;
 		i = 0;
 	symbolsRemoval:
@@ -82,8 +80,6 @@ loopstart:
 			goto symbolsRemoval;
 		}
 
-		word += '\0';
-
 		i = 0;
 	capitalLettersNormalization:
 		if (word[i] != '\0')
@@ -99,9 +95,9 @@ loopstart:
 		bool isStopWord = false;
 		i = 0;
 	checkStopWord:
-		if (i < stopWordsNuber)
+		if (i < stopWordsNumber)
 		{
-			if (word == stopWords[i] + '\0')
+			if (word == stopWords[i])
 			{
 				isStopWord = true;
 				goto endCheckStopWord;
