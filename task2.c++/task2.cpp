@@ -139,7 +139,10 @@ loopstart:
 				if (words[i] == word)
 				{
 					wordWasPreviouslyAdded = true;
-					wordsPages[i][wordOccurrences[i]] = 5;
+					if (wordOccurrences[i] < 100)
+					{
+						wordsPages[i][wordOccurrences[i]] = 5;
+					}
 					wordOccurrences[i]++;
 					goto endCheckIfWordWasPreviously;
 				}
@@ -219,21 +222,21 @@ outerSortingLoop:
 			if (wordOccurrences[i] <= 100)
 			{
 				cout << std::setw(8) << std::left << words[i] << " - ";
-			}
 
-			j = 0;
-		printPages:
-			if (j < wordOccurrences[i])
-			{
-				cout << wordsPages[i][j];
-				j++;
+				j = 0;
+			printPages:
 				if (j < wordOccurrences[i])
 				{
-					cout << ", ";
+					cout << wordsPages[i][j];
+					j++;
+					if (j < wordOccurrences[i])
+					{
+						cout << ", ";
+					}
+					goto printPages;
 				}
-				goto printPages;
+				cout << '\n';
 			}
-			cout << '\n';
 			i++;
 			goto out;
 		}
