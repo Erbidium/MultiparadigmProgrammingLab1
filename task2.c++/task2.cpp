@@ -13,6 +13,17 @@ int main()
 	int wordsCapacity = 10;
 	string* words = new string[wordsCapacity];
 	int* wordOccurrences = new int[wordsCapacity];
+	int** wordsPages = new int* [wordsCapacity];
+
+	int i = 0, j = 0;
+
+memoryAlloc:
+	if (i < wordsCapacity)
+	{
+		wordsPages[i] = new int[101];
+		i++;
+		goto memoryAlloc;
+	}
 
 	char punctuationMarksAndSymbols[] = { ',', '"', '\'', '.', '!', '?', ':', ';', '(', ')', '{', '}' };
 	int numberOfSymbolsToCheck = 12;
@@ -22,8 +33,6 @@ int main()
 
 	int currentWordIndex = 0;
 	string symbolsSequence;
-
-	int i = 0, j = 0;
 
 	ifstream inFile(fileName);
 
@@ -35,6 +44,16 @@ loopstart:
 			wordsCapacity *= 2;
 			string* newWords = new string[wordsCapacity];
 			int* newWordOccurrences = new int[wordsCapacity];
+			int** newWordsPages = new int* [wordsCapacity];
+
+			i = wordsCapacity / 2;
+		newMemoryAlloc:
+			if (i < wordsCapacity)
+			{
+				newWordsPages[i] = new int[101];
+				i++;
+				goto newMemoryAlloc;
+			}
 
 			i = 0;
 		copyWord:
@@ -42,6 +61,7 @@ loopstart:
 			{
 				newWords[i] = words[i];
 				newWordOccurrences[i] = wordOccurrences[i];
+				newWordsPages[i] = wordsPages[i];
 				i++;
 				goto copyWord;
 			}
@@ -51,6 +71,9 @@ loopstart:
 
 			delete[] wordOccurrences;
 			wordOccurrences = newWordOccurrences;
+
+			delete[] wordsPages;
+			wordsPages = newWordsPages;
 		}
 
 		string word;
@@ -116,6 +139,7 @@ loopstart:
 				if (words[i] == word)
 				{
 					wordWasPreviouslyAdded = true;
+					wordsPages[i][wordOccurrences[i]] = 5;
 					wordOccurrences[i]++;
 					goto endCheckIfWordWasPreviously;
 				}
@@ -127,6 +151,7 @@ loopstart:
 			{
 				words[currentWordIndex] = word;
 				wordOccurrences[currentWordIndex] = 1;
+				wordsPages[currentWordIndex][0] = 5;
 				currentWordIndex++;
 			}
 		}
@@ -165,9 +190,14 @@ outerSortingLoop:
 				string temp = words[j];
 				words[j] = words[j + 1];
 				words[j + 1] = temp;
+
 				int tempOccurences = wordOccurrences[j];
 				wordOccurrences[j] = wordOccurrences[j + 1];
 				wordOccurrences[j + 1] = tempOccurences;
+
+				int* tempPages = wordsPages[j];
+				wordsPages[j] = wordsPages[j + 1];
+				wordsPages[j + 1] = tempPages;
 			}
 			j++;
 			goto innerSortingLoop;
@@ -188,8 +218,22 @@ outerSortingLoop:
 		{
 			if (wordOccurrences[i] <= 100)
 			{
-				cout << std::setw(8) << std::left << words[i] << " - " << wordOccurrences[i] << "\n";
+				cout << std::setw(8) << std::left << words[i] << " - ";
 			}
+
+			j = 0;
+		printPages:
+			if (j < wordOccurrences[i])
+			{
+				cout << wordsPages[i][j];
+				j++;
+				if (j < wordOccurrences[i])
+				{
+					cout << ", ";
+				}
+				goto printPages;
+			}
+			cout << '\n';
 			i++;
 			goto out;
 		}
@@ -197,4 +241,14 @@ outerSortingLoop:
 
 	delete[] words;
 	delete[] wordOccurrences;
+
+	i = 0;
+clearMemory:
+	if (i < wordsCapacity)
+	{
+		delete[] wordsPages[i];
+		i++;
+		goto clearMemory;
+	}
+	delete[] wordsPages;
 }
