@@ -12,8 +12,8 @@ int main()
 
 	int wordsCapacity = 10;
 
-	int wordsPerPage = 255;
-	int wordsCounter = 0;
+	int symbolsPerPage = 1800;
+	int symbolsCounter = 0;
 	int currentPage = 1;
 
 	string* words = new string[wordsCapacity];
@@ -86,6 +86,7 @@ loopstart:
 	symbolsRemoval:
 		if (symbolsSequence[i] != '\0')
 		{
+			symbolsCounter++;
 			bool validSymbol = true;
 			int k = 0;
 		checkSymbol:
@@ -136,8 +137,6 @@ loopstart:
 	endCheckStopWord:
 		if (!isStopWord)
 		{
-			wordsCounter++;
-
 			i = 0;
 			bool wordWasPreviouslyAdded = false;
 		checkIfWordWasPreviously:
@@ -148,10 +147,10 @@ loopstart:
 					wordWasPreviouslyAdded = true;
 					if (wordOccurrences[i] < 100)
 					{
-						if (wordsCounter >= wordsPerPage)
+						if (symbolsCounter >= symbolsPerPage)
 						{
 							currentPage++;
-							wordsCounter = 0;
+							symbolsCounter = 0;
 						}
 						wordsPages[i][wordOccurrences[i]] = currentPage;
 					}
@@ -167,10 +166,10 @@ loopstart:
 				words[currentWordIndex] = word;
 				wordOccurrences[currentWordIndex] = 1;
 
-				if (wordsCounter >= wordsPerPage)
+				if (symbolsCounter >= symbolsPerPage)
 				{
 					currentPage++;
-					wordsCounter = 0;
+					symbolsCounter = 0;
 				}
 				wordsPages[currentWordIndex][0] = currentPage;
 
